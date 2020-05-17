@@ -14,7 +14,7 @@ namespace Snehix.Generic.API.Models
         public string LastName { get; set; }
         public string FatherName { get; set; }
         public string MotherName { get; set; }
-        public int GuardianId { get; set; }
+        public int? GuardianId { get; set; }
         public int UserTypeId { get; set; }
         public string DateOfBirth { get; set; }
         public int UserStatusId { get; set; }
