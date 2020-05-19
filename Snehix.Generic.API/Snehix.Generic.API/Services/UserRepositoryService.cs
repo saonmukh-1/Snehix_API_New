@@ -35,9 +35,15 @@ namespace Snehix.Generic.API.Services
                     cmd.Parameters.AddWithValue("grdId", model.GuardianId);
                 else
                     cmd.Parameters.AddWithValue("grdId",DBNull.Value);
+
+                if (model.InstituteId.HasValue)
+                    cmd.Parameters.AddWithValue("InstituteIdVal", model.InstituteId);
+                else
+                    cmd.Parameters.AddWithValue("InstituteIdVal", DBNull.Value);
                 cmd.Parameters.AddWithValue("usrtypeId", model.UserTypeId);
-                cmd.Parameters.AddWithValue("dob", model.DateOfBirth);
+                cmd.Parameters.AddWithValue("dob", model.DateOfBirth); 
                 cmd.Parameters.AddWithValue("usrStatusId", model.UserStatusId);
+                
                 cmd.Parameters.AddWithValue("crtBy", model.Actor);
                 cmd.ExecuteNonQuery();
             }
@@ -128,6 +134,112 @@ namespace Snehix.Generic.API.Services
                 {
                     sda.Fill(dt);
                 }
+            }
+
+            return dt;
+        }
+
+        public async Task CreateUserRegistration(int userId,int instituteId,string actor
+            ,DateTime startDate)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                var cmd = new MySqlCommand("Create_Registration", _connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("UserIdVal", userId);
+                cmd.Parameters.AddWithValue("InstituteIdVal", instituteId);
+                cmd.Parameters.AddWithValue("CreatedByValue", actor);
+                cmd.Parameters.AddWithValue("StartDateVal", startDate);
+               
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                //await _connection.col
+            }
+        }
+
+        public async Task TerminateUserRegistration(int registrationId,string actor
+            , DateTime finishDate)
+        {
+            try
+            {
+                await _connection.OpenAsync();
+                var cmd = new MySqlCommand("Update_Registration", _connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("RegistrationIdVal", registrationId);                
+                cmd.Parameters.AddWithValue("actor", actor);
+                cmd.Parameters.AddWithValue("EndDateVal", finishDate);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                //await _connection.col
+            }
+        }
+
+        public async Task<DataTable> GetUserRegistrationByUserId(int userId)
+        {
+            DataTable dt = new DataTable();
+            await _connection.OpenAsync();
+            using (MySqlCommand cmd = new MySqlCommand("Get_UserRegistrationByUserId", _connection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("UserIdVal", userId);
+                using (MySqlDataAdapter sda = new MySqlDataAdapter(cmd))
+                {
+                    sda.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
+        public async Task<DataTable> GetAllUserRegistrationByInstituteId(int instituteId)
+        {
+            DataTable dt = new DataTable();
+            await _connection.OpenAsync();
+            using (MySqlCommand cmd = new MySqlCommand("Get_AllUserRegistrationByInstitute", _connection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("InstituteIdval", instituteId);
+                using (MySqlDataAdapter sda = new MySqlDataAdapter(cmd))
+                {
+                    sda.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
+        public async Task<DataTable> GetAllUserRegistration()
+        {
+            DataTable dt = new DataTable();
+            await _connection.OpenAsync();
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand("Get_AllUserRegistration", _connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter sda = new MySqlDataAdapter(cmd))
+                    {
+                        sda.Fill(dt);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
 
             return dt;

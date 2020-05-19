@@ -31,6 +31,11 @@ namespace Snehix.Generic.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post(EntityTypeModel model)
+
+
+
+
+
         {
             try
             {

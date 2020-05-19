@@ -45,6 +45,7 @@ namespace Snehix.Generic.API.Controllers
             try
             {
                 var service = new InstituteRepositoryService(connString);
+                model.Actor = "User1";
                 await service.CreateInstitute(model);
                 return new ObjectResult("Success");
             }

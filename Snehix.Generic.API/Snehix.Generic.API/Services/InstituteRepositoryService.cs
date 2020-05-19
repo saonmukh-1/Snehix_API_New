@@ -28,6 +28,7 @@ namespace Snehix.Generic.API.Services
                 cmd.Parameters.AddWithValue("InstituteDescription", model.Description);
                 cmd.Parameters.AddWithValue("BoardId", model.BoardId);
                 cmd.Parameters.AddWithValue("TypeId", model.TypeId);
+                cmd.Parameters.AddWithValue("CreatedBy", model.Actor);
 
                 cmd.Parameters.AddWithValue("MailingAddLine1", model.MailingAddress.AddressLine1);
                 cmd.Parameters.AddWithValue("MailingAddLine2", model.MailingAddress.AddressLine2);
@@ -45,7 +46,7 @@ namespace Snehix.Generic.API.Services
                 cmd.Parameters.AddWithValue("BillingCountry", model.BillingAddress.Country);
                 cmd.Parameters.AddWithValue("BillingZip", model.BillingAddress.Zipcode);
 
-                cmd.Parameters.AddWithValue("LandlineNumber", model.ContactDetail.LandLineNumber);
+                cmd.Parameters.AddWithValue("LandNumber", model.ContactDetail.LandLineNumber);
                 cmd.Parameters.AddWithValue("AltLandline", model.ContactDetail.AltLandLineNumber);
                 cmd.Parameters.AddWithValue("MobNumber", model.ContactDetail.MobileNumber);
                 cmd.Parameters.AddWithValue("AltMobNumber", model.ContactDetail.AltMobileNumber);

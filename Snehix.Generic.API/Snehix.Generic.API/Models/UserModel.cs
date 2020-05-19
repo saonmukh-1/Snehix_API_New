@@ -19,5 +19,17 @@ namespace Snehix.Generic.API.Models
         public string DateOfBirth { get; set; }
         public int UserStatusId { get; set; }
         public string Actor { get; set; }
+        public int? InstituteId { get; set; }
+    }
+
+    public class UserRegistrationModel
+    {       
+        public int UserId { get; set; }        
+        public DateTime StartDate { get; set; }        
+        public int InstituteId { get; set; }
+    }
+    public class UserRegistrationUpdateModel
+    {        
+        public DateTime EndDate { get; set; }        
     }
 }
